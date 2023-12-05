@@ -111,7 +111,7 @@ suffered from low statistics, and thus very large event weights, after requiring
 Event mixing shuffles the photons in an event with the photons from consecutive events, modulo the number of events.\par
 % Considering photons in descending order by $p_T$ for an event $N$, the first photon is unchanged in event $N$, the second photon is replaced with the photon from event $N+1$, the third is replaced with the photon from event $N+2$, and the forth is replaced by the photon from event $N+3$.\par
 
-% The event mixed background samples were generated in several steps. 2018UL data samples were converted from miniAOD to nanoAOD with the necessary extra branches, thus diverging slightly from the central 2018UL data samples and the 2018 non-UL samples used in the full Run 2 analysis. The resulting UL samples then underwent the event mixing procedure before being processed in the event selection step. Event mixed background samples, in nanoAOD format, were not stored as a space saving measure. Instead, event mixing is calculated for on the fly before applying selections.\par
+% The event mixed background samples were generated in several steps. 2018UL data samples were converted from miniAOD to nanoAOD with the necessary extra branches; thus, diverging slightly from the central 2018UL data samples and the 2018 non-UL samples used in the full Run 2 analysis. The resulting UL samples then underwent the event mixing procedure before being processed in the event selection step. Event mixed background samples, in nanoAOD format, were not stored as a space saving measure. Instead, event mixing is calculated for on the fly before applying selections.\par
 
 
 \section{Event Selection}
@@ -154,11 +154,11 @@ The result of applying these cuts is samples of pure signal events and (ideally)
 % \end{multicols}
 
 
-There is some disagreement between data and background distributions of the training variables, thus a multi-dimensional, per-event reweighting is performed on the entire $m_{\gamma\gamma\gamma\gamma}$ range. The reweighting is calculated using the ratio of event mixed background and data in the $m_{\gamma\gamma\gamma\gamma}$ sideband region. The variables $\Delta$R($a_1,a_2$), $a_{1,2}\; p_T$, and $m_{a1} - m_{a2}$ are used to calculate the per-event weights. The reweighted samples are used as input to train and test the BDT. A split on even/odd events is performed such that the training set consists of odd events and testing events consists of even events.\par
+There is some disagreement between data and background distributions of the training variables; thus, a multi-dimensional, per-event reweighting is performed on the entire $m_{\gamma\gamma\gamma\gamma}$ range. The reweighting is calculated using the ratio of event mixed background and data in the $m_{\gamma\gamma\gamma\gamma}$ sideband region. The variables $\Delta$R($a_1,a_2$), $a_{1,2}\; p_T$, and $m_{a1} - m_{a2}$ are used to calculate the per-event weights. The reweighted samples are used as input to train and test the BDT. A split on even/odd events is performed such that the training set consists of odd events and testing events consists of even events.\par
 
 
 \subsection{Categorization}
-Once the model is trained, it is applied to signal MC and event mixed background. All events from the training and testing set used in the previous step are considered. A categorization optimization procedure is applied on the prediction distributions to maximize the significance for each category for a minimal number of categories. The Approximate Mean Signficance is defined in Eq \ref{eqn:ams}. It is known that the total significance increases with the number of categories, thus the number of categories is optimized such that a minimal number are created, which increases the number of signal events per category.\par
+Once the model is trained, it is applied to signal MC and event mixed background. All events from the training and testing set used in the previous step are considered. A categorization optimization procedure is applied on the prediction distributions to maximize the significance for each category for a minimal number of categories. The Approximate Mean Signficance is defined in Eq \ref{eqn:ams}. It is known that the total significance increases with the number of categories; however, the number of categories is optimized such that a minimal number are created, which increases the number of signal events per category.\par
 
 \begin{equation} \label{eqn:ams}
 \text{AMS} = \sqrt{2 \left[ (S + B) \ln \left(1 + \frac{S}{B}\right) - S \right]}
