@@ -4,6 +4,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{graphicx}
+\usepackage[font=footnotesize]{caption}
 \usepackage{amsmath}
 \usepackage{indentfirst}
 \usepackage[hidelinks, bookmarks=true]{hyperref}
@@ -62,7 +63,7 @@ Depending on the mass of $a$, the decay $a\rightarrow \gamma\gamma$ may have thr
 \section{LHC and CMS}
 \begin{figure}
    \centering
-   \includegraphics[width=0.6\linewidth]{figures/CMSslice_whiteBackground.png}
+   \includegraphics[width=0.7\linewidth]{figures/CMSslice_whiteBackground.png}
    \caption{Slice showing CMS sub-detectors and how particles interact in them \cite{particle_flow_2017}.}
    \label{fig:cms-subdetectors}
 \end{figure}
@@ -71,7 +72,7 @@ The Large Hadron Collider (LHC) is a proton-proton collider and the world's larg
 
 The Compact Muon Solenoid (CMS) detector is a hermetic, general purpose detector along the ring of the Large Hadron Collider (LHC). CMS is composed of several sub-detectors, each designed to collect data on a specific part of a proton-proton collision event, and a superconducting solenoid at a field strength of $3.8$ T. A schematic of these sub-detectors is shown in Fig. \ref{fig:cms-subdetectors}. The main sub-detectors of CMS are, from the beam line outwards, the silicon tracker (pixel and strip), the electromagnetic calorimeter, the hadronic calorimeter, and the muon chambers \cite{CMS_Collaboration_2008}.\par
 
-Recording a collision event requires each of these subsystems to detect different parts of the event. Many particles are created during a collision with many decaying or hadronizing to produce even more particles. These particles first pass through the silicon tracker, which detects charged particles as tracks. Then the ECAL detects electromagnetically interacting particles with lead tungstate crystals and is optimized for photons and electrons. Photon and electron energy is completely measured, but charged hadrons, while they do produce a shower, pass through. The particles enter the HCAL, a sampling calorimeter, and produce showers. Charged and neutral hadrons are contained in the HCAL, but any remaining particles, i.e., muons, continue through the magnet to interact with the muon chambers.\par
+Recording a collision event requires each of these subsystems to detect different parts of the event. Many particles are created during a collision with many decaying or hadronizing to produce even more particles. These particles first pass through the silicon tracker, which detects charged particles as tracks. Then the ECAL detects electromagnetically interacting particles with lead tungstate crystals. Photon and electron energy is completely measured, but charged hadrons, while they do produce a shower, pass through. The particles enter the HCAL, a sampling calorimeter, and produce showers. Charged and neutral hadrons are contained in the HCAL, but any remaining particles, i.e., muons, continue through the magnet to interact with the muon chambers.\par
 
 \subsection{ECAL} %% FIX !!!
 The ECAL is a homogeneous calorimeter and composed of  ${\sim} 75,000$ scintillating PbWO\textsubscript{4} crystals in two parts: the barrel (EB) and the endcaps (EE), in $\eta$ ranges $|\eta| < 1.48$ and $1.48 < |\eta| < 3.00$, respectively. The PbWO\textsubscript{4} crystals measure the energy of electrons and photons passing through them by collecting the energy of their electromagnetic showers \cite{egamma_reco_2021}. The crystals were chosen for their Moli\`ere radius, i.e., a crystal contains 90\% of a shower's deposition on average, and response time \cite{ECAL_TDR}. Unlike the barrel section, the endcaps have an additional preshower component in two layers positioned in front of the crystals: lead and silicon, where the silicon strip detectors are used to detect neutral pion decays.\par
@@ -118,37 +119,57 @@ Event mixing shuffles the photons in an event with the photons from consecutive 
 
 
 \section{Event Selection}
-% need to clarify all of this part
-% identification of photon (candidate of photon. could be an electron? fake photons? need to explain to variables!!!)
-Events are chosen from data with the high level trigger (HLT) selecting interesting events with selections specifically optimized for the low mass diphoton search. Slightly more strict cuts than the HLT requirements, refered to as HLT mimicking cuts, are required to ensure the same phase space for all samples.
-% mimicking cuts, additional cuts and selections on the pseudoscalars and the four photon object, a Boosted Decision Tree (BDT) model to discriminate signal/background, and a categorization procedure based on BDT score.
-The HLT path and associated mimicking cuts applied to 2018 Ultra Legacy (UL) samples are shown in Table \ref{tab:hlt_cuts_2018}. It is important to note that these trigger paths, cuts, and selections will all be evaluated, and potentially changed, for the Run 3 analysis. All of the listed criteria for the 2018 proof-of-concept study are taken from the Run 2 analysis, where optimization of cuts has already been performed.\par
+Events are chosen from data with the L1 trigger and the high level trigger (HLT) selecting interesting events with selections specifically optimized for the low mass diphoton search. Then selections are applied to photon candidates in these events to ensure that the candidates are indeed photons. When a sufficient set of selections have been imposed on photon candidates, additional selections designed to ensure optimal reconstruction of pseudoscalar candidates are imposed. Furthermore, a Boosted Decision Tree (BDT) is used to more effectively discern signal-like and background-like events. It is important to note that the triggers and selections will all be evaluated, and potentially changed, for the Run 3 analysis. All of the listed criteria for the 2018 proof-of-concept study are taken from the Run 2 analysis, where optimization of selections has already been performed.\par
 
-The HLT is applied to both simulated and data samples. Events are also required to contain at least one diphoton candidate. Additional, more strict cuts are then applied to the photons from the diphoton candidate. Both photons must pass either $R_9 > 0.8$, Charged Hadron Isolation $<20$ GeV, or (Charged Hadron Isolation)/$p_T < 0.3$ if $p_T > 14$ GeV and $H/E < 0.15$. Photons must also pass an electron veto; a photon candidate is rejected if its supercluster has a matching electron track with at least one hit in the pixel tracker. Additionally, daughter photons of diphoton candidates must pass $p_T > 30$ GeV and $p_T > 18$ GeV for leading and subleading photons, respectively. The cuts on diphoton candidates will be referred to as pre-selections.\par
+Selections are applied to a photon candidates' energy deposition in the ECAL, isolation from other particle candidates, and to other particle candidate tracks to remove fake photons. Photon candidates are required to have a minimum transverse energy ($E_T$), concentration of energy in a $3\times 3$ crystal matrix relative to its supercluster ($R_9$), energy weighted standard deviation of single crystal $\eta$ within its supercluster ($\sigma_{i\eta i\eta}$), and ratio of energy deposited in nearest HCAL tower within a cone of $\Delta R = 0.15$ centered on photon candidate direction and energy deposited in its supercluster. A supercluster is defined as a $5\times 5$ crystal matrix centered around the crystal of greatest energy deposition. These requirements ensure that a photon candidate has the correct shower shape, enough energy to be efficiently reconstructed, and is produced from a decay.\par
 
-Events that consist of at least one diphoton which pass the pre-selection requirements are subject to additional selections relating to the pseudoscalars and their daughter photons. The events must contain at least four photons where, in descending order of $p_T$, the leading two photons must pass $\gamma_1$ $p_T > 30$ GeV and $\gamma_2$ $p_T > 18$ GeV while the remaing two photons must pass a minimum $p_T$ threshold of $p_{T} > 15$ GeV. There is some overlap with the pre-selections, however the additional cut of 15 GeV on $\gamma_{3/4}$ is necessary to achieve maximal performance from the event selection BDT. All photons must also fall within the tracker fiducial region, i.e., $|\eta| < 2.5$, and not within the EB-EE gap, $1.442 < |\eta| < 1.556$, where photon reconstruction is suboptimal. Finally, there is a restriction on the mass of the four photon object of $110 < m_{\gamma \gamma \gamma \gamma} < 180$ GeV. The signal region in this analysis is defined as $115 < m_{\gamma \gamma \gamma \gamma} < 135$ GeV while the sideband region is defined as the union of $110 < m_{\gamma \gamma \gamma \gamma} < 115$ GeV and $135 < m_{\gamma \gamma \gamma \gamma} < 180$ GeV.
+Photon candidates are also required to pass isolation requirements. To ensure that there is sufficiently little energy deposition in the area around the photon candidate, a maximum value of the following quantities is imposed: the sum of $E_T$ of all Particle Flow photon candidates within a cone of $\Delta R = 0.3$ excluding the candidate photon, sum of of track $p_T$ within a cone of $\Delta R = 0.3$, and sum of $p_T$ of all Particle Flow charged hadron candidates within a cone of $\Delta R = 0.3$. These isolation requirements ensure that the photon candidate is not a very collimated decay fragmented from a jet, i.e., a fake photon. It is also important to ensure that a photon candidate's supercluster does not match with an electron candidate hit in the pixel tracker. This is known as an electron veto.\par
 
-After applying pre-selections then photon selections, the pseudoscalars need to be reconstructed from the four photons in an event. In the case of an event with more than four photons, the four with the highest $p_T$ are chosen. To reconstruct the pseudoscalar candidate, a technique called mass mixing is used. All combinations of the pseudoscalar candidate pairs, which each consist of two photons, are computed. To determine which set of pseudoscalar candidates is the best match, the quantity $\Delta M = |m_{a_{\gamma_{a} \gamma_{b}}} - m_{a_{\gamma_{c} \gamma_{d}}}|$, where $a,b,c,d \in \{1,2,3,4\}$, is calculated. This $\Delta M$ tells us which two sets of photons have the lowest absolute difference in invariant mass, i.e., the two sets with the most optimal photon pairing. The pair of pseudoscalar candidates with the lowest $\Delta M$ are chosen for each event.\par
-
-\hl{(Note: I don't mention photon MVA ID explicitly in the cuts since there is no cut on photon MVA ID ever, by design. The pre-selections used for this analysis and those of the low mass $h\rightarrow \gamma\gamma$ analysis diverge here since we want to retain as many events as possible for BDT training. I can add some description about photon MVA ID, but that would invite explanation of other variables contained in nanoAOD since even photon MVA ID is built in to the data format.)}
-
-\begin{table}
+\begin{figure}[t]
    \centering
-   \begin{tabular}{l|c|c|c|c|c|c}
-        & $E_T$ & $R_9$ & $H/E$ & $\sigma_{i\eta i\eta}$ & PF Pho Iso & Tracker Iso\\ \hline
-       EB; $R_9>0.85$ & $15.0$ & $> 0.5$ & $<0.08$ & $<0.015$ & $<4.0$ & $<6.0$\\
-       EB; $R_9\leq0.85$ & $15.0$ & $> 0.5$ & $<0.08$ & $<0.015$ & $<4.0$ & $<6.0$\\
-       EE; $R_9>0.9$ & $15.0$ & $> 0.8$ & $<0.08$ & $<0.035$ & $<4.0$ & $<6.0$
-   \end{tabular}
-   \caption{Cuts mimicking the low mass diphoton Higgs boson HLT path:\\ \textit{HLT\_Diphoton30\_18R9IdL\_AND\_HE\_AN\_IsoCaloId\_NoPixelVeto}.}
-   \label{tab:hlt_cuts_2018}
-\end{table}
+   \begin{minipage}{0.48\textwidth}
+     \centering
+     \includegraphics[width=0.95\linewidth]{figures/pho4_mvaID_compare.png}
+     \caption{The MVA ID for $\gamma_4$, calculated by the $h\rightarrow \gamma\gamma$ group, is the strongest discriminating variable for the event selection BDT. Signal MC for four nominal pseudoscalar mass points, event mixed background, and data are shown with selections applied.}
+     \label{fig:pho4_MVA_ID}
+   \end{minipage}
+   \hfill
+   \begin{minipage}{0.48\textwidth}
+     \centering
+     \includegraphics[width=0.95\linewidth]{figures/SubleadPs_interMass_compare.png}
+     \caption{$(m_{a2\,RECO} - m_{a\, Hyp})/m_{\gamma\gamma\gamma\gamma}$ is the second strongest discriminating variable for the event selection BDT. Signal MC for four nominal pseudoscalar mass points, event mixed background, and data are shown with selections applied.}
+     \label{fig:SubleadPs_interMass}
+   \end{minipage}
+\end{figure}
+
+Fundamentally, the values of these cuts are determined by the physical properties of the detector. There are also selections that are motivated by the geometry of the detector, however. Selections also enforce that photon candidates lie within a range of $\eta$ such that they are within the tracker fiducial region, i.e., the $\eta$ region ecompassing the entire tracker, and not within the gap between the ECAL Barrel and Endcaps, where photon reconstruction is suboptimal. A selection that is entirely motivated by the search however is the mass window of the four photon candidate. This requirement is motivated by the decay width of the Higgs boson, which is ideally represented by the four photon object. At a minimum, a requirement of at least four photons in an event and at least one diphoton candidate is necesssary.\par
+
+The pseudoscalars then need to be reconstructed from the four photons in an event. In the case of an event with more than four photons, the four with the highest $p_T$ are chosen. To reconstruct the pseudoscalar candidate, a technique called mass mixing is used. All combinations of the pseudoscalar candidate pairs, which each consist of two photons, are computed. To determine which set of pseudoscalar candidates is the best match, the quantity $\Delta M = |m_{a_{\gamma_{a} \gamma_{b}}} - m_{a_{\gamma_{c} \gamma_{d}}}|$, where $a,b,c,d \in \{1,2,3,4\}$, is calculated. This $\Delta M$ tells us which two sets of photons have the lowest absolute difference in invariant mass, i.e., the two sets with the most optimal photon pairing. The pair of pseudoscalar candidates with the lowest $\Delta M$ are chosen for each event.\par
+
+% \begin{table}
+%    \centering
+%    \begin{tabular}{l|c|c|c|c|c|c}
+%         & $E_T$ & $R_9$ & $H/E$ & $\sigma_{i\eta i\eta}$ & PF Pho Iso & Tracker Iso\\ \hline
+%        EB; $R_9>0.85$ & $15.0$ & $> 0.5$ & $<0.08$ & $<0.015$ & $<4.0$ & $<6.0$\\
+%        EB; $R_9\leq0.85$ & $15.0$ & $> 0.5$ & $<0.08$ & $<0.015$ & $<4.0$ & $<6.0$\\
+%        EE; $R_9>0.9$ & $15.0$ & $> 0.8$ & $<0.08$ & $<0.035$ & $<4.0$ & $<6.0$
+%    \end{tabular}
+%    \caption{Cuts mimicking the low mass diphoton Higgs boson HLT path:\\ \textit{HLT\_Diphoton30\_18R9IdL\_AND\_HE\_AN\_IsoCaloId\_NoPixelVeto}.}
+%    \label{tab:hlt_cuts_2018}
+% \end{table}
 % NOTE: H/E is energy in HCAL over energy in ECAL
 
 \subsection{Event Selection BDT}
-The event selection BDT is a 4-photon event classifier used to distinguish between signal-like and background-like events. Training samples are produced using signal MC and data. Data samples are processed to produce event mixed background samples. Then signal MC and event mixed background samples have all analysis selections applied. An additional step of adding a variable, $m_{Hyp}$, corresponding to the hypothesis mass point is done for both samples. For the event mixed background sample, $m_{Hyp}$ is a flat distribution with discrete peaks at each pseudoscalar mass point, by construction. When using the trained model to make predictions, $m_{Hyp}$, and any variables that depend on it, is recalculated as a discrete peak at the hypothesis mass point.\par
+\begin{figure}
+   \centering
+   \includegraphics[width=0.48\linewidth]{figures/mHyp_EM_background.png}
+   \caption{The $m_{Hyp}$ distribution of signal MC for several pseudoscalar mass points, event mixed background, and data. $m_{Hyp}$ is defined as the hypothesis mass for a given pseudoscalar mass point and as a flat function with discrete peaks for event mixed background and data, during event selection BDT training. $m_{Hyp}$ and associated variables are recalculated for the appropriate pseudoscalar mass point when applying the model.}
+   \label{fig:m_hyp}
+\end{figure}
 
-The result of applying these cuts is samples of pure signal events and (ideally) pure background events. These signal and background samples are used as inputs to the 4-photon BDT, where a subset of relevant variables are used to train the model. Only one model is trained for all mass points; the $m_{Hyp}$ variable, and other variables dependant on it, allow the model to distinguish the hypothesis mass point when computing predictions. The training variables are listed as follows: $\gamma_{1-4}$ MVA ID; $a_{1,2}\; p_T$; $\Delta R(a_{1}, a_{2})/m_{\gamma\gamma\gamma\gamma}$; $m_{a1} - m_{a2}$; $\cos\theta_{a\gamma}$, where $\theta_{a\gamma}$ is defined as the angle between the leading photon coming from the leading pseudoscalar and the direction of $a\rightarrow\gamma\gamma$; $(m_{a1\,RECO} - m_{a\, Hyp})/m_{\gamma\gamma\gamma\gamma}$; and $(m_{a2\,RECO} - m_{a\, Hyp})/m_{\gamma\gamma\gamma\gamma}$.
+The event selection BDT is a 4-photon event classifier used to distinguish between signal-like and background-like events. It functions to improve analysis sensitivity relative to a purely cut-based approach. Training samples are produced using signal MC and data. Data samples are processed to produce event mixed background samples then signal MC and event mixed background samples have all analysis selections applied. An additional step of adding a variable, $m_{Hyp}$, corresponding to the hypothesis mass point is done such that only one event selection BDT model is necessary for all pseudoscalar mass points. Fig. \ref{fig:m_hyp} shows the constructed distribution for $m_{Hyp}$. This variable, and dependent training variables, can be recalculated as the model is applied for various pseudoscalar mass points.\par
+
+The result of applying these cuts is samples of pure signal events and (ideally) pure background events. These signal and background samples are used as inputs to the 4-photon BDT, where a subset of relevant variables are used to train the model. Only one model is trained for all mass points; the $m_{Hyp}$ variable, and other variables dependant on it, allow the model to distinguish the hypothesis mass point when computing predictions. The training variables are listed as follows: $\gamma_{1-4}$ MVA ID; $a_{1,2}\; p_T$; $\Delta R(a_{1}, a_{2})/m_{\gamma\gamma\gamma\gamma}$; $m_{a1} - m_{a2}$; $\cos\theta_{a\gamma}$, where $\theta_{a\gamma}$ is defined as the angle between the leading photon coming from the leading pseudoscalar and the direction of $a\rightarrow\gamma\gamma$; $(m_{a1\,RECO} - m_{a\, Hyp})/m_{\gamma\gamma\gamma\gamma}$; and $(m_{a2\,RECO} - m_{a\, Hyp})/m_{\gamma\gamma\gamma\gamma}$. Two training variables, with cuts applied, can be seen in Fig. \ref{fig:pho4_MVA_ID} and Fig. \ref{fig:SubleadPs_interMass} for various pseudoscalar mass points.
 
 % \begin{multicols}{2}
 % \begin{itemize}
@@ -182,12 +203,27 @@ Finally, these BDT score cuts are applied to signal and data samples such that t
 
 \section{Statistical Analysis}
 \subsection{Signal Modelling} \label{sec:sig-mod}
-A model of the signal shape for each nominal pseudoscalar mass point is needed. After all selections and categorization cuts are applied, only even signal events, used for testing the BDT, are kept for the signal modelling step. A signal model is computed for the $m_{\gamma \gamma \gamma \gamma}$ distribution from each signal sample. A separate signal model is generated for each category. There was a choice to fit models with a double-sided Crystal Ball function or the sum of Gaussians however, the Gaussian is shown to fit the best.\par
+A model of the signal shape for each nominal pseudoscalar mass point is needed. After all selections and categorization cuts are applied, only even signal events, used for testing the BDT, are kept for the signal modelling step. A signal model is computed for the $m_{\gamma \gamma \gamma \gamma}$ distribution from each signal sample. A separate signal model is generated for each category. There was a choice to fit models with a double-sided Crystal Ball function or the sum of Gaussians however, the Gaussian is shown to fit the best. Parametric signal models for $m_a = 15$ GeV and $m_a = 50$ GeV pseudoscalar mass points are shown in Fig. \ref{fig:gauss_15_50_GeV}.\par
 % In the Run 2 analysis, a double-sided Crystal Ball function was used.\par
 
 % The order of Gaussians used to fit the $m_{\gamma \gamma \gamma \gamma}$ distribution is determined by the likelihood ratio test. The optimal order is reached when $2\Delta NLL = 2[\text{NLL}_{N} - \text{NLL}_{N+1}] \leq 0.05$, where $\text{NLL}_{N}$ is the negative log likelihood for $N$ Gaussians. NLL is computed by \textit{RooFit::minNll}. The quantity $2\Delta NLL$ follows a $\chi^2$ distribution with M degrees of freedom, where M is the difference in degrees of freedom between N+1 and N Gaussians. The ideal number of Gaussians for all pseudoscalar mass points is found to be two.\par
 
 After signal models for nominal mass points are generated, models for intermediate mass points, e.g., $47$ GeV, are required. It is known that the $m_{\gamma\gamma\gamma\gamma}$ resolution varies smoothly as a function of $m_{a}$ \cite{Run2_analysis}. Should the variation of mass resolution between each nominal mass point be fairly small, the parameters of the nominal mass points may be used. Normalization may also be interpolated from the smooth distribution of detector efficiency $\times$ analysis acceptance. This process for generating these intermediate mass point models is currently in progress.\par
+
+\begin{figure}
+   \centering
+   \begin{minipage}{0.48\textwidth}
+      \centering
+      \includegraphics[width=0.95\linewidth]{figures/MC_Signal_Gauss_m_a_15_GeV.png}
+   \end{minipage}
+   \hfill
+   \begin{minipage}{0.48\textwidth}
+      \centering
+      \includegraphics[width=0.95\linewidth]{figures/MC_Signal_Gauss_m_a_50_GeV.png}
+   \end{minipage}
+   \caption{Signal models of $m_{\gamma\gamma\gamma\gamma}$ for $m_a = 15$ GeV and $m_a = 50$ GeV pseudoscalar mass points. The parametric models are built from the sume of 2 Gaussians. The Full Width Half Maximum (FWHM) and $\sigma_{eff}$, defined as the region containing 68\% of signal events, are calculated based on the parametric model. Normalization of the signal models is arbitrary.}
+   \label{fig:gauss_15_50_GeV}
+\end{figure}
 
 \subsection{Background Modelling}
 Although the background modelling step is incomplete, a short treatment will be provided. A background model is used to quantify the shape of $m_{\gamma\gamma\gamma\gamma}$ resulting from non-signal events. The background shape is modelled as one of the following functions: exponentials, Bernstein polynomials, Laurent series, and power law functions. The choice of function is treated as a nuisance parameter in the likelihood fit to data. Uncertainties are accounted for with the discrete profiling method, performed by the Higgs Combine statistical analysis software \cite{discrete-profiling, higgs-combine}. The fits will be computed over the entire $110 < m_{\gamma\gamma\gamma\gamma} < 180$ GeV range. A background model will be generated for each pseudoscalar mass point.\par
