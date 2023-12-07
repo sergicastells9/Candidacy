@@ -9,8 +9,6 @@
 \usepackage{indentfirst}
 \usepackage[hidelinks, bookmarks=true]{hyperref}
 \usepackage[section]{placeins}
-\usepackage{soul}
-\usepackage{color}
 \usepackage{multicol}
 \usepackage[
     natbib=true,
@@ -127,10 +125,10 @@ Photon candidates are also required to pass isolation requirements. To ensure th
 
 \begin{figure}[t]
    \centering
-   \begin{minipage}{0.48\textwidth}
+   \begin{minipage}{0.48\textwidth}  % split into 4 and show all photon MVA ID!!!
      \centering
      \includegraphics[width=0.95\linewidth]{figures/pho4_mvaID_compare.png}
-     \caption{The MVA ID for $\gamma_4$, calculated by the $h\rightarrow \gamma\gamma$ group, is the strongest discriminating variable for the event selection BDT. Signal MC for four nominal pseudoscalar mass points, event mixed background, and data are shown with selections applied.}
+     \caption{Example of MVA ID for $\gamma_4$, calculated by the $h\rightarrow \gamma\gamma$ group, is the strongest discriminating variable for the event selection BDT. Signal MC for four nominal pseudoscalar mass points, event mixed background, and data are shown with selections applied.}
      \label{fig:pho4_MVA_ID}
    \end{minipage}
    \hfill
@@ -169,7 +167,7 @@ The pseudoscalars then need to be reconstructed from the four photons in an even
 
 The event selection BDT is a 4-photon event classifier used to distinguish between signal-like and background-like events. It functions to improve analysis sensitivity relative to a purely cut-based approach. Training samples are produced using signal MC and data. Data samples are processed to produce event mixed background samples then signal MC and event mixed background samples have all analysis selections applied. An additional step of adding a variable, $m_{Hyp}$, corresponding to the hypothesis mass point is done such that only one event selection BDT model is necessary for all pseudoscalar mass points. Fig. \ref{fig:m_hyp} shows the constructed distribution for $m_{Hyp}$. This variable, and dependent training variables, can be recalculated as the model is applied for various pseudoscalar mass points.\par
 
-The result of applying these cuts is samples of pure signal events and (ideally) pure background events. These signal and background samples are used as inputs to the 4-photon BDT, where a subset of relevant variables are used to train the model. Only one model is trained for all mass points; the $m_{Hyp}$ variable, and other variables dependant on it, allow the model to distinguish the hypothesis mass point when computing predictions. The training variables are listed as follows: $\gamma_{1-4}$ MVA ID; $a_{1,2}\; p_T$; $\Delta R(a_{1}, a_{2})/m_{\gamma\gamma\gamma\gamma}$; $m_{a1} - m_{a2}$; $\cos\theta_{a\gamma}$, where $\theta_{a\gamma}$ is defined as the angle between the leading photon coming from the leading pseudoscalar and the direction of $a\rightarrow\gamma\gamma$; $(m_{a1\,RECO} - m_{a\, Hyp})/m_{\gamma\gamma\gamma\gamma}$; and $(m_{a2\,RECO} - m_{a\, Hyp})/m_{\gamma\gamma\gamma\gamma}$. Two training variables, with cuts applied, can be seen in Fig. \ref{fig:pho4_MVA_ID} and Fig. \ref{fig:SubleadPs_interMass} for various pseudoscalar mass points.
+The result of applying these cuts is samples of pure signal events and (ideally) pure background events. These signal and background samples are used as inputs to the 4-photon BDT, where a subset of relevant variables are used to train the model. Only one model is trained for all mass points; the $m_{Hyp}$ variable, and other variables dependant on it, allow the model to distinguish the hypothesis mass point when computing predictions. The training variables are listed as follows: $\gamma_{1-4}$ MVA ID; $a_{1,2}\; p_T$; $\Delta R(a_{1}, a_{2})/m_{\gamma\gamma\gamma\gamma}$; $m_{a1} - m_{a2}$; $\cos\theta_{a\gamma}$, where $\theta_{a\gamma}$ is defined as the angle between the leading photon coming from the leading pseudoscalar and the direction of $a\rightarrow\gamma\gamma$; $(m_{a1\,RECO} - m_{a\, Hyp})/m_{\gamma\gamma\gamma\gamma}$; and $(m_{a2\,RECO} - m_{a\, Hyp})/m_{\gamma\gamma\gamma\gamma}$. Two input variables for the training, with cuts applied, can be seen in Fig. \ref{fig:pho4_MVA_ID} and Fig. \ref{fig:SubleadPs_interMass} for various pseudoscalar mass points.
 
 % \begin{multicols}{2}
 % \begin{itemize}
@@ -210,7 +208,7 @@ A model of the signal shape for each nominal pseudoscalar mass point is needed. 
 
 After signal models for nominal mass points are generated, models for intermediate mass points, e.g., $47$ GeV, are required. It is known that the $m_{\gamma\gamma\gamma\gamma}$ resolution varies smoothly as a function of $m_{a}$ \cite{Run2_analysis}. Should the variation of mass resolution between each nominal mass point be fairly small, the parameters of the nominal mass points may be used. Normalization may also be interpolated from the smooth distribution of detector efficiency $\times$ analysis acceptance. This process for generating these intermediate mass point models is currently in progress.\par
 
-\begin{figure}
+\begin{figure} % add 30, 40, 60 instead
    \centering
    \begin{minipage}{0.48\textwidth}
       \centering
@@ -221,7 +219,7 @@ After signal models for nominal mass points are generated, models for intermedia
       \centering
       \includegraphics[width=0.95\linewidth]{figures/MC_Signal_Gauss_m_a_50_GeV.png}
    \end{minipage}
-   \caption{Signal models of $m_{\gamma\gamma\gamma\gamma}$ for $m_a = 15$ GeV and $m_a = 50$ GeV pseudoscalar mass points. The parametric models are built from the sume of 2 Gaussians. The Full Width Half Maximum (FWHM) and $\sigma_{eff}$, defined as the region containing 68\% of signal events, are calculated based on the parametric model. Normalization of the signal models is arbitrary.}
+   \caption{Examples of signal models of $m_{\gamma\gamma\gamma\gamma}$ for $m_a = 15$ GeV and $m_a = 50$ GeV pseudoscalar mass points. The parametric models are built from the sume of 2 Gaussians. The Full Width Half Maximum (FWHM) and $\sigma_{eff}$, defined as the region containing 68\% of signal events, are calculated based on the parametric model. Normalization of the signal models is arbitrary.}
    \label{fig:gauss_15_50_GeV}
 \end{figure}
 
@@ -239,7 +237,7 @@ Although the background modelling step is incomplete, a short treatment will be 
 
 
 \section{Summary}
-A search for the SM Higgs boson decaying to pseudoscalars with a fully resolved, four photon final state is proposed. Many of the tools needed to perform the full analysis have been created -- adjustments for new data notwithstanding -- including a full event selection with an associated BDT, category optimization tools, and signal modelling tools for nominal mass points. The aim of a Run 3 study is to improve upon the existing Run 2 analysis sensistivity, regardless of whether this analysis utilizes purely Run 3 data or combines Run 2 and 3. Ideally, a Run 3 study could produce a discovery given better analysis sensistivity from increased statistics, reduced systematic error due to better precision in Run 3, better estimation of background, and a more optimized selection procedure via improved machine learning techniques. The plans for this analysis are to reach a level of acceptance of the recreation of the 2018 subset of the Run 2 analysis, achieving the previously set limits at a minimum, with the HiggsDNA framework such that we can begin working with Run 3 data. More work is still required to complete the 2018 proof-of-concept study. However, this study should enable a fast and smooth transistion to working with Run 3 data.\par
+A search for the SM Higgs boson decaying to pseudoscalars with a fully resolved, four photon final state is proposed. Many of the tools needed to perform the full analysis have been created -- adjustments for new data notwithstanding -- including a full event selection with an associated BDT, category optimization tools, and signal modelling tools for nominal mass points. The aim of a Run 3 study is to improve upon the existing Run 2 analysis sensitivity, regardless of whether this analysis utilizes purely Run 3 data or combines Run 2 and 3. Ideally, a Run 3 study could produce a discovery given better analysis sensitivity from increased statistics, reduced systematic error due to better precision in Run 3, better estimation of background, and a more optimized selection procedure via improved machine learning techniques. The plans for this analysis are to reach a level of acceptance of the recreation of the 2018 subset of the Run 2 analysis, achieving the previously set limits at a minimum, with the HiggsDNA framework such that we can begin working with Run 3 data. More work is still required to complete the 2018 proof-of-concept study. However, this study should enable a fast and smooth transition to working with Run 3 data.\par
 
 \newpage
 \printbibliography
